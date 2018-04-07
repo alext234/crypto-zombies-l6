@@ -1,14 +1,11 @@
-[![Build Status](https://travis-ci.org/alext234/crypto-zombies-l5.svg?branch=master)](https://travis-ci.org/alext234/crypto-zombies-l5)
+[![Build Status](https://travis-ci.org/alext234/crypto-zombies-l6.svg?branch=master)](https://travis-ci.org/alext234/crypto-zombies-l6)
 
 # CryptoZombies, lesson 5
 
 # Overview
 
-This is from the tutorial at https://share.cryptozombies.io/en/lesson/5/share/AlexT?id=Z2l0aHVifDE2MjQ1MjI=
+This is from the tutorial at TODO
 
-ERC721 Token has been implemented in this lesson.
-
-In addition, unit tests and testnet-based tests have been added.
 
 # Build 
 
