@@ -21,6 +21,9 @@ class App extends Component {
   componentDidMount() {
     window.addEventListener('load', this.checkMetamaskWeb3);
   }
+  componentWillUnmount() {
+    window.removeEventListener('load', this.checkMetamaskWeb3);
+  }
   
   render() {
     return (
