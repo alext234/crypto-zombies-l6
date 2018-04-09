@@ -12,8 +12,9 @@
 
 	<script>
 		var cryptoZombies;
+		var userAccount;
 		function startApp() {
-			var cryptoZombiesAddress="YOUR_CONTRACT_ADDRESS";
+			var cryptoZombiesAddress="0xc4e157D452FBaA20767cFD051099a4ccb7a9A911"; // on Kovan network
 			cryptoZombies = new web3js.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
 			var accountInterval = setInterval(function() {
 				// Check if account has changed
@@ -122,9 +123,11 @@
 		
 			// Checking if Web3 has been injected by the browser (Mist/MetaMask)
 			if (typeof web3 !== 'undefined') {
+				console.log("Metamask web3 detected")
 				// Use Mist/MetaMask's provider
 				web3js = new Web3(web3.currentProvider);
 			} else {
+				console.log("Metamask web3 NOT detected")
 				// Handle the case where the user doesn't have web3. Probably 
 				// show them a message telling them to install Metamask in 
 				// order to use our app.

@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Web3 from 'web3';
 
 class App extends Component {
+  web3js;
+  
+  checkMetamaskWeb3() {
+    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    if (typeof window.web3 !== 'undefined') {
+      // Use Mist/MetaMask's provider
+      this.web3js = new Web3(window.web3.currentProvider);
+    } else {
+      // Handle the case where the user doesn't have web3. Probably 
+      // show them a message telling them to install Metamask in 
+      // order to use our app.
+    }
+  }
+  
+  componentDidMount() {
+    window.addEventListener('load', this.checkMetamaskWeb3);
+  }
+  
   render() {
     return (
       <div className="App">
