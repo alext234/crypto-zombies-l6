@@ -16,6 +16,7 @@ class App extends Component {
       // show them a message telling them to install Metamask in 
       // order to use our app.
     }
+    
   }
   
   componentDidMount() {
@@ -23,6 +24,10 @@ class App extends Component {
   }
   componentWillUnmount() {
     window.removeEventListener('load', this.checkMetamaskWeb3);
+  }
+  
+  handleStartButton = () => {
+    // TODO
   }
   
   render() {
@@ -33,7 +38,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          <button onClick={()=>this.handleStartButton()} >StartApp</button>
         </p>
       </div>
     );
