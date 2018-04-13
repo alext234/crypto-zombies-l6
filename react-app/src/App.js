@@ -6,11 +6,14 @@ import Web3 from 'web3';
 class App extends Component {
   web3js;
   
-  checkMetamaskWeb3() {
+  state = {
+    web3js: undefined,
+  }
+  checkMetamaskWeb3= () => {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
-      this.web3js = new Web3(window.web3.currentProvider);
+      this.setState({web3js: new Web3(window.web3.currentProvider)})
     } else {
       // Handle the case where the user doesn't have web3. Probably 
       // show them a message telling them to install Metamask in 
@@ -26,8 +29,12 @@ class App extends Component {
     window.removeEventListener('load', this.checkMetamaskWeb3);
   }
   
+  startApp() {
+    // TODO: 
+  }
+  
   handleStartButton = () => {
-    // TODO
+    this.startApp()
   }
   
   render() {
