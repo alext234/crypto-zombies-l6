@@ -11,6 +11,7 @@ class App extends Component {
   state = {
       web3js: undefined, // web3 API
       cryptoZombies: undefined, // the contract
+      userAccount: undefined, 
   }
 
   checkMetamaskWeb3= () => {
@@ -40,6 +41,9 @@ class App extends Component {
   }
   
   startApp() {
+    setInterval(function() {
+      // TODO: call the getAccounts method
+    }, 1000);
     // TODO
   }
   
