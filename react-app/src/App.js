@@ -21,6 +21,7 @@ class App extends Component {
       var cryptoZombiesAddress="0xc4e157D452FBaA20767cFD051099a4ccb7a9A911"; // on Kovan network
       var web3js = new Web3(window.web3.currentProvider)
       var cryptoZombies = new web3js.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
+      console.log("detected webjs from metamask")
       this.setState ({
         web3js: web3js,
         cryptoZombies: cryptoZombies,
@@ -40,11 +41,24 @@ class App extends Component {
     window.removeEventListener('load', this.checkMetamaskWeb3);
   }
   
+  checkAndUpdateUserAccount() {
+    this.state.web3js.eth.getAccounts((error, accounts)=>{
+      if (accounts.length === 0) {
+        console.log("no account found")
+      } else {
+        const ethFromAddress = accounts[0]
+        if (ethFromAddress !== this.state.userAccount) {
+          console.log("account is: "+ ethFromAddress)
+          this.setState({userAccount: ethFromAddress})
+          // Call some function to update the UI with the new account
+          //getZombiesByOwner(userAccount).then(displayZombies);
+        }
+      }
+    })
+  }
+  
   startApp() {
-    setInterval(function() {
-      // TODO: call the getAccounts method
-    }, 1000);
-    // TODO
+    setInterval(this.checkAndUpdateUserAccount.bind(this), 1000);
   }
   
   handleStartButton = () => {
