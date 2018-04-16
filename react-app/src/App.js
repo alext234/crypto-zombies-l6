@@ -41,6 +41,19 @@ class App extends Component {
     window.removeEventListener('load', this.checkMetamaskWeb3);
   }
   
+  getTransferEventsToUserAccount() {
+    // TODO: and call this from checkAndUpdateUserAccount?
+  }
+  
+  getZombiesByOwner(owner) {
+    return this.state.cryptoZombies.methods.getZombiesByOwner(owner).call()
+  }
+  
+  displayZombies(ids) {
+    console.log(ids)
+    // TODO: display to UI
+  }
+  
   checkAndUpdateUserAccount() {
     this.state.web3js.eth.getAccounts((error, accounts)=>{
       if (accounts.length === 0) {
@@ -50,8 +63,8 @@ class App extends Component {
         if (ethFromAddress !== this.state.userAccount) {
           console.log("account is: "+ ethFromAddress)
           this.setState({userAccount: ethFromAddress})
-          // Call some function to update the UI with the new account
-          //getZombiesByOwner(userAccount).then(displayZombies);
+          
+          this.getZombiesByOwner(this.state.userAccount).then(this.displayZombies)
         }
       }
     })
