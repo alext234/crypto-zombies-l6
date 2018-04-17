@@ -49,9 +49,17 @@ class App extends Component {
     return this.state.cryptoZombies.methods.getZombiesByOwner(owner).call()
   }
   
+  
+  getZombieDetails(id) {
+    return this.state.cryptoZombies.methods.zombies(id).call()
+  }
+  
   displayZombies(ids) {
     console.log(ids)
-    // TODO: display to UI
+    this.getZombieDetails(ids[0]).then(function(zombie) {
+      console.log(zombie)
+    })
+    // TODO: display all zombie details to UI in a table
   }
   
   checkAndUpdateUserAccount() {
@@ -64,7 +72,7 @@ class App extends Component {
           console.log("account is: "+ ethFromAddress)
           this.setState({userAccount: ethFromAddress})
           
-          this.getZombiesByOwner(this.state.userAccount).then(this.displayZombies)
+          this.getZombiesByOwner(this.state.userAccount).then(this.displayZombies.bind(this))
         }
       }
     })
