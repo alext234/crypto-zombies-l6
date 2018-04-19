@@ -101,13 +101,26 @@ class App extends Component {
         <p className="App-intro">
           <button onClick={()=>this.handleStartButton()} >StartApp</button>
         </p>
-        <table>
+        <table border="1">
+          <thead>
+            <tr >
+              <td>Name</td>
+              <td>DNA</td>
+              <td>Level</td>
+              <td>Win Count</td>
+              <td>Loss Count</td>
+            </tr>
+          </thead>
           <tbody>
           {
             this.state.displayedZombies.map(( zombie, index ) => {
               return (
                 <tr key={index}>
                   <td>{zombie.name}</td>
+                  <td>{zombie.dna}</td>
+                  <td>{zombie.level}</td>
+                  <td>{zombie.winCount}</td>
+                  <td>{zombie.lossCount}</td>
                 </tr>
               );
             })          
