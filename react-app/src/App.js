@@ -11,7 +11,8 @@ class App extends Component {
   state = {
       web3js: undefined, // web3 API
       cryptoZombies: undefined, // the contract
-      userAccount: undefined, 
+      userAccount: undefined,
+      displayedZombies:[],
   }
 
   checkMetamaskWeb3= () => {
@@ -55,11 +56,15 @@ class App extends Component {
   }
   
   displayZombies(ids) {
-    console.log(ids)
-    this.getZombieDetails(ids[0]).then(function(zombie) {
-      console.log(zombie)
-    })
-    // TODO: display all zombie details to UI in a table
+    this.setState({displayedZombies:[]})
+    
+    for (let id of ids) {
+      this.getZombieDetails(id).then(function(zombie) {
+        this.setState( prevState => ({
+          displayedZombies: [...prevState.displayedZombies, zombie]
+        }))
+      }.bind(this))
+    }
   }
   
   checkAndUpdateUserAccount() {
@@ -96,6 +101,19 @@ class App extends Component {
         <p className="App-intro">
           <button onClick={()=>this.handleStartButton()} >StartApp</button>
         </p>
+        <table>
+          <tbody>
+          {
+            this.state.displayedZombies.map(( zombie, index ) => {
+              return (
+                <tr key={index}>
+                  <td>{zombie.name}</td>
+                </tr>
+              );
+            })          
+          }
+          </tbody>
+        </table>
       </div>
     );
   }
