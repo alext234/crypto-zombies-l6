@@ -84,7 +84,10 @@ class App extends Component {
   }
   
   startApp() {
+    // check for account changes
     setInterval(this.checkAndUpdateUserAccount.bind(this), 1000);
+    // check for events coming from this userAccount
+    setInterval(this.getTransferEventsToUserAccount.bind(this), 1000);
   }
   
   handleStartButton = () => {
