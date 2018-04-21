@@ -4,6 +4,7 @@ import './App.css';
 import Web3 from 'web3';
 
 var cryptoZombiesABI = require('./cryptozombies_abi.js').abi;
+var cryptoZombiesAddress="0xc4e157D452FBaA20767cFD051099a4ccb7a9A911"; // on Kovan network
 
 class App extends Component {
   web3js;
@@ -13,6 +14,7 @@ class App extends Component {
       web3Infura: undefined, // web3 API provided by infura
       cryptoZombies: undefined, // the contract
       userAccount: undefined,
+      errorMsg:'',
       displayedZombies:[],
   }
 
@@ -20,7 +22,6 @@ class App extends Component {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
-      var cryptoZombiesAddress="0xc4e157D452FBaA20767cFD051099a4ccb7a9A911"; // on Kovan network
       var web3js = new Web3(window.web3.currentProvider)
       var web3Infura = new Web3(new Web3.providers.HttpProvider("https://kovan.infura.io"));
       var cryptoZombies = new web3js.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
@@ -46,7 +47,15 @@ class App extends Component {
   }
   
   getTransferEventsToUserAccount() {
-    // TODO: and call this from checkAndUpdateUserAccount?
+    var czEvents = new this.state.web3Infura.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
+    czEvents.events.Transfer({ filter: { _to: this.state.userAccount } })
+      .on("data", function(event) {
+        let data = event.returnValues;
+        console.log("event data "+data)
+        // The current user just received a zombie!
+        this.getZombiesByOwner(this.state.userAccount).then(this.displayZombies.bind(this))
+      })
+      .on("error", console.error);
   }
   
   getZombiesByOwner(owner) {
@@ -74,7 +83,9 @@ class App extends Component {
     this.state.web3js.eth.getAccounts((error, accounts)=>{
       if (accounts.length === 0) {
         console.log("no account found")
+        this.setState({errorMsg:"No metamask account found"})
       } else {
+        this.setState({errorMsg:''})
         const ethFromAddress = accounts[0]
         if (ethFromAddress !== this.state.userAccount) {
           console.log("account is: "+ ethFromAddress)
@@ -107,6 +118,7 @@ class App extends Component {
         <p className="App-intro">
           <button onClick={()=>this.handleStartButton()} >StartApp</button>
         </p>
+        <p>{this.state.errorMsg}</p>
         <table border="1">
           <thead>
             <tr >
