@@ -9,7 +9,8 @@ class App extends Component {
   web3js;
   
   state = {
-      web3js: undefined, // web3 API
+      web3js: undefined, // web3 API provided by metamask
+      web3Infura: undefined, // web3 API provided by infura
       cryptoZombies: undefined, // the contract
       userAccount: undefined,
       displayedZombies:[],
@@ -21,10 +22,12 @@ class App extends Component {
       // Use Mist/MetaMask's provider
       var cryptoZombiesAddress="0xc4e157D452FBaA20767cFD051099a4ccb7a9A911"; // on Kovan network
       var web3js = new Web3(window.web3.currentProvider)
+      var web3Infura = new Web3(new Web3.providers.HttpProvider("https://kovan.infura.io"));
       var cryptoZombies = new web3js.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
       console.log("detected webjs from metamask")
       this.setState ({
         web3js: web3js,
+        web3Infura: web3Infura,
         cryptoZombies: cryptoZombies,
       })
     } else {
