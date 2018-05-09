@@ -86,6 +86,7 @@ class App extends Component {
         this.setState({errorMsg:"No metamask account found"})
       } else {
         this.setState({errorMsg:''})
+        // TODO: enable the button to createRandomZombies
         const ethFromAddress = accounts[0]
         if (ethFromAddress !== this.state.userAccount) {
           console.log("account is: "+ ethFromAddress)
@@ -113,8 +114,11 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title"> CryptoZombies ReactJS front-end</h1>
         </header>
+        <p>
+          Metamask account is required (Kovan Network) 
+        </p>
         <p className="App-intro">
           <button onClick={()=>this.handleStartButton()} >StartApp</button>
         </p>
