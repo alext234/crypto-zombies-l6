@@ -1,10 +1,13 @@
 [![Build Status](https://travis-ci.org/alext234/crypto-zombies-l6.svg?branch=master)](https://travis-ci.org/alext234/crypto-zombies-l6)
 
-# CryptoZombies, lesson 5
+# CryptoZombies, lesson 6
 
 # Overview
 
 This is from the tutorial at https://share.cryptozombies.io/en/lesson/6/share/The_Phantom_of_Web3?id=Z2l0aHVifDE2MjQ1MjI=
+
+The code is extended from lesson 5 code with `web3js` added. However, instead of following the exact same steps 
+of the tutorial, I decided to build a Reactjs app instead. 
 
 
 # Build 
@@ -204,3 +207,25 @@ View the event logs with `seth`:
 ```
 seth events $CONTRACT
 ```
+
+# React app
+
+The react app requires the following to work:
+
+- nodejs
+- Metamask extension at the browser (with Kovan network is preferred because 
+  there is an already-deployed contract on this network). 
+
+
+To start the Reactapp:
+
+ 
+ ```
+ cd react-app
+ npm start
+ ```
+ 
+ It will automatically open up the browser at the address http://localhost:30000.
+ 
+ Switch your Metamask to a Kovan account and you can now interact with the app.
+ 
