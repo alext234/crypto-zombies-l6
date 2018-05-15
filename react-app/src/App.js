@@ -16,6 +16,7 @@ class App extends Component {
       userAccount: undefined,
       errorMsg:'',
       displayedZombies:[],
+      newZombieName:''
   }
 
   checkMetamaskWeb3= () => {
@@ -109,6 +110,14 @@ class App extends Component {
     this.startApp()
   }
   
+  handleNewZombieNameChange = (event) => {
+    this.setState({newZombieName:event.target.value})
+  }
+  
+  handleCreateNewZombieButton = (event) => {
+    // TODO: call the contract method
+  }
+  
   render() {
     return (
       <div className="App">
@@ -149,6 +158,11 @@ class App extends Component {
           }
           </tbody>
         </table>
+        <label>
+          New zombie:
+          <input type="text" value={this.state.newZombieName} onChange={this.handleNewZombieNameChange} />
+          <button onClick={this.handleCreateNewZombieButton} >Create</button>
+        </label>
       </div>
     );
   }
