@@ -58,7 +58,20 @@ class App extends Component {
       })
       .on("error", console.error);
   }
+
+
+  createRandomZombie(name) {
+    this.state.cryptoZombies.methods.createRandomZombie(name)
+      .send({ from: this.state.userAccount })
+      .on("receipt", function(receipt) {
+        this.displayZombies.bind(this)
+      })
+      .on("error", function(error) {
+        console.log("error create new zombie : "+ error)
+      });
+  }
   
+    
   getZombiesByOwner(owner) {
     return this.state.cryptoZombies.methods.getZombiesByOwner(owner).call()
   }
@@ -115,7 +128,8 @@ class App extends Component {
   }
   
   handleCreateNewZombieButton = (event) => {
-    // TODO: call the contract method
+    this.createRandomZombie(this.state.newZombieName)
+    
   }
   
   render() {
@@ -127,6 +141,12 @@ class App extends Component {
         </header>
         <p>
           Metamask account is required (Kovan Network) 
+        </p>
+        <p>
+          The smart contract is available 
+          <a href='https://kovan.etherscan.io/address/0xc4e157D452FBaA20767cFD051099a4ccb7a9A911'
+             target='_blank'> here 
+          </a> 
         </p>
         <p className="App-intro">
           <button onClick={()=>this.handleStartButton()} >StartApp</button>
