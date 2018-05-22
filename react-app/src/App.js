@@ -10,6 +10,7 @@ class App extends Component {
   web3js;
   
   state = {
+      isAppStarted: false, 
       web3js: undefined, // web3 API provided by metamask
       web3Infura: undefined, // web3 API provided by infura
       cryptoZombies: undefined, // the contract
@@ -64,6 +65,7 @@ class App extends Component {
     this.state.cryptoZombies.methods.createRandomZombie(name)
       .send({ from: this.state.userAccount })
       .on("receipt", function(receipt) {
+        console.log("receipt : ", receipt)
         this.displayZombies.bind(this)
       })
       .on("error", function(error) {
@@ -113,6 +115,7 @@ class App extends Component {
   }
   
   startApp() {
+    this.setState({isAppStarted:true})
     // check for account changes
     setInterval(this.checkAndUpdateUserAccount.bind(this), 1000);
     // check for events coming from this userAccount
@@ -131,60 +134,86 @@ class App extends Component {
     this.createRandomZombie(this.state.newZombieName)
     
   }
-  
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title"> CryptoZombies ReactJS front-end</h1>
-        </header>
-        <p>
-          Metamask account is required (Kovan Network) 
-        </p>
-        <p>
-          The smart contract is available 
-          <a href='https://kovan.etherscan.io/address/0xc4e157D452FBaA20767cFD051099a4ccb7a9A911'
-             target='_blank'> here 
-          </a> 
-        </p>
-        <p className="App-intro">
-          <button onClick={()=>this.handleStartButton()} >StartApp</button>
-        </p>
-        <p>{this.state.errorMsg}</p>
-        <table border="1">
-          <thead>
-            <tr >
-              <td>Name</td>
-              <td>DNA</td>
-              <td>Level</td>
-              <td>Win Count</td>
-              <td>Loss Count</td>
-            </tr>
-          </thead>
-          <tbody>
-          {
-            this.state.displayedZombies.map(( zombie, index ) => {
-              return (
-                <tr key={index}>
-                  <td>{zombie.name}</td>
-                  <td>{zombie.dna}</td>
-                  <td>{zombie.level}</td>
-                  <td>{zombie.winCount}</td>
-                  <td>{zombie.lossCount}</td>
+    if (!this.state.isAppStarted) {
+      return (
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title"> CryptoZombies ReactJS front-end</h1>
+          </header>
+          <p>
+            Metamask account is required (Kovan Network) 
+          </p>
+          <p>
+            The smart contract is available 
+            <a href='https://kovan.etherscan.io/address/0xc4e157D452FBaA20767cFD051099a4ccb7a9A911'
+              target='_blank'> here 
+            </a> 
+          </p>
+          <p className="App-intro">
+            <button onClick={()=>this.handleStartButton()} >StartApp</button>
+          </p>
+          <p>{this.state.errorMsg}</p>
+        </div>
+      )
+    } else {
+        return (
+          <div className="App">
+            <header className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <h1 className="App-title"> CryptoZombies ReactJS front-end</h1>
+            </header>
+            <p>
+              Metamask account is required (Kovan Network) 
+            </p>
+            <p>
+              The smart contract is available 
+              <a href='https://kovan.etherscan.io/address/0xc4e157D452FBaA20767cFD051099a4ccb7a9A911'
+                target='_blank'> here 
+              </a> 
+            </p>
+            <p className="App-intro">
+              <button onClick={()=>this.handleStartButton()} >StartApp</button>
+            </p>
+            <p>{this.state.errorMsg}</p>
+            <table border="1">
+              <thead>
+                <tr >
+                  <td>Name</td>
+                  <td>DNA</td>
+                  <td>Level</td>
+                  <td>Win Count</td>
+                  <td>Loss Count</td>
                 </tr>
-              );
-            })          
-          }
-          </tbody>
-        </table>
-        <label>
-          New zombie:
-          <input type="text" value={this.state.newZombieName} onChange={this.handleNewZombieNameChange} />
-          <button onClick={this.handleCreateNewZombieButton} >Create</button>
-        </label>
-      </div>
-    );
+              </thead>
+              <tbody>
+              {
+                this.state.displayedZombies.map(( zombie, index ) => {
+                  return (
+                    <tr key={index}>
+                      <td>{zombie.name}</td>
+                      <td>{zombie.dna}</td>
+                      <td>{zombie.level}</td>
+                      <td>{zombie.winCount}</td>
+                      <td>{zombie.lossCount}</td>
+                    </tr>
+                  );
+                })          
+              }
+              </tbody>
+            </table>
+            <label>
+              New zombie
+              <p>(only for accounts which have never createdRandomZombie before):</p>
+              <input type="text" value={this.state.newZombieName} onChange={this.handleNewZombieNameChange} />
+              <button onClick={this.handleCreateNewZombieButton} >Create</button>
+            </label>
+          </div>
+        );
+        
+    }
   }
 }
 
