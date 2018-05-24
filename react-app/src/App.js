@@ -55,6 +55,7 @@ class App extends Component {
         let data = event.returnValues;
         console.log("event data "+data)
         // The current user just received a zombie!
+        // TODO: need to verify if this callback has access to 'this' below?
         this.getZombiesByOwner(this.state.userAccount).then(this.displayZombies.bind(this))
       })
       .on("error", console.error);
@@ -66,10 +67,13 @@ class App extends Component {
       .send({ from: this.state.userAccount })
       .on("receipt", function(receipt) {
         console.log("receipt : ", receipt)
-        this.displayZombies.bind(this)
+        // TODO: how to access to 'this' ?
       })
       .on("error", function(error) {
         console.log("error create new zombie : "+ error)
+        // TODO: how to access to 'this'  in order to setState error? or should we consider using 
+        // callback or promise instead of 'event emitter'
+        // https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-send
       });
   }
   
