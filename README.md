@@ -228,4 +228,15 @@ To start the Reactapp:
  It will automatically open up the browser at the address http://localhost:30000.
  
  Switch your Metamask to a Kovan account and you can now interact with the app.
+ Below are some screenshots:
+
+ - Select a Kovan testnet account on Metamask and click *StartApp*
+
+ ![Metamask account](images/select-kovan-testnet-account.png?raw=true "Metamask account")
+
+ - Enter a zombie name and click *Create* button
+
+ ![Create zombie](images/create-zombie.png?raw=true "Create zombie")
+
+
  
